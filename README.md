@@ -93,11 +93,69 @@ df.renomeado = df.rename(columns={
     od = df.query('Hard_Disk_Capacity == "256 GB SSD" or Hard_Disk_Capacity == "512 GB SSD"')
     od.head(50).reset_index(drop=True)
 
-
 # Caso queira fazer 3 comparacoes em duas colunas, compare a condicao da primeira coluna entre parenteses e depois a outra comparacao. O que acontece se não colocar os parenteses: A expressão Hard_Disk_Capacity == "512 GB SSD" and Rating > "4.3" será avaliada primeiro devido à precedência do operador and sobre o operador or. Isso pode levar a resultados incorretos, porque você está misturando condições de forma não desejada.
 
     od = df.query('(Hard_Disk_Capacity == "256 GB SSD" or Hard_Disk_Capacity == "512 GB SSD") and Rating > 4.7')
     od.head().reset_index(drop=True)
 
+# Caso queira agrupar duas colunas e somar uma delas para ver quais categorias vendeu mais                               variavel = dataset.groupby('Nome da tabela')['Nome da outra tabela'].sum()
 
+
+    categoria_preco = df.groupby('Product Category')['Total Revenue'].sum()
+
+# Colocando em ordem descrescente
+
+    categoria_preco_asc = categoria_preco.sort_values(ascending=False)
+
+# Resetando o index 
+    categoria_df = categoria_preco_asc.reset_index()
+
+# Renomeando as colunas da variavel (não é o dataset)
+    categoria_df.columns = ['Categoria dos produtos', 'Total de vendas']
+
+
+# Para descobrir o maior e o menor indice de uma coluna                                                           variavel = v_query.loc[v_query['Nome da coluna'].idxmax()] 
+
+    melhor_regiao = regiao_df.loc[regiao_df['Total de vendas'].idxmax()]
+    pior_regiao = regiao_df.loc[regiao_df['Total de vendas'].idxmin()]
     
+
+# Concatenando para mostrar o indice maior e menor de uma coluna
+
+    desempenho_extremos = pd.concat([melhor_regiao.to_frame().T, pior_regiao.to_frame().T], ignore_index=True)
+
+# Transformando o date time 
+
+    df['Date'] = pd.to_datetime(df['Date'])
+
+# Injetando o dia, mes e ano no dataset 
+
+df['Year'] = df['Date'].dt.year
+df['Month'] = df['Date'].dt.month
+df['Day'] = df['Date'].dt.day
+
+# Como mostrar as vendas do dia (date)
+
+    vendas_diarias = df.groupby(df['Date'].dt.date)['Total Revenue'].sum()
+
+# Como mostrar as vendas semanais (week)
+
+    vendas_semanais = df.groupby(df['Date'].dt.to_period('W'))['Total Revenue'].sum()
+    vendas_semanais
+
+ # Como mostrar as vendas mensais (month)
+
+    vendas_mensais = df.groupby(df['Date'].dt.to_period('M'))['Total Revenue'].sum()
+    vendas_mensais
+
+
+# Como tirar a media
+
+    media_diaria = vendas_diarias.mean()
+    media_diaria
+
+
+# Como tirar o desvio padrao
+
+    desvio_padrao_vendas_diarias = vendas_diarias.std()
+    desvio_padrao_vendas_diarias
