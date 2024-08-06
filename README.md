@@ -159,3 +159,16 @@ df['Day'] = df['Date'].dt.day
 
     desvio_padrao_vendas_diarias = vendas_diarias.std()
     desvio_padrao_vendas_diarias
+
+
+# Para descobrir picos de vendas. Primeiro, calcula a media de vendas e o desvio padrao. Segundo, coloca na forma do limiar (media + 2 × desvio padrao). Se as vendas diárias forem maiores que o limiar, essas vendas serão consideradas picos de vendas.
+
+picos_vendas = vendas_diarias[vendas_diarias > (media_diaria + 2 * desvio_padrao_vendas_diarias)].reset_index()
+
+
+# Caso queira saber quanto representa o valor total das vendas por método de pagamento em porcentagem. Em resumo, está pegando o valor total das vendas de cada método de pagamento e dividindo pelo valor total de todas as vendas de todos os métodos de pagamento, multiplicando o resultado por 100 para converter para porcentagem.
+
+valor_total_metodos_pagamento_percent = (valor_total_metodos_pagamento / valor_total_metodos_pagamento.sum()) * 100
+
+
+
