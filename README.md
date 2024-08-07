@@ -130,9 +130,9 @@ df.renomeado = df.rename(columns={
 
 # Injetando o dia, mes e ano no dataset 
 
-df['Year'] = df['Date'].dt.year
-df['Month'] = df['Date'].dt.month
-df['Day'] = df['Date'].dt.day
+    df['Year'] = df['Date'].dt.year
+    df['Month'] = df['Date'].dt.month
+    df['Day'] = df['Date'].dt.day
 
 # Como mostrar as vendas do dia (date)
 
@@ -163,25 +163,25 @@ df['Day'] = df['Date'].dt.day
 
 # Para descobrir picos de vendas. Primeiro, calcula a media de vendas e o desvio padrao. Segundo, coloca na forma do limiar (media + 2 × desvio padrao). Se as vendas diárias forem maiores que o limiar, essas vendas serão consideradas picos de vendas.
 
-picos_vendas = vendas_diarias[vendas_diarias > (media_diaria + 2 * desvio_padrao_vendas_diarias)].reset_index()
+    picos_vendas = vendas_diarias[vendas_diarias > (media_diaria + 2 * desvio_padrao_vendas_diarias)].reset_index()
 
 
 # Caso queira saber quanto representa o valor total das vendas por método de pagamento em porcentagem. Em resumo, está pegando o valor total das vendas de cada método de pagamento e dividindo pelo valor total de todas as vendas de todos os métodos de pagamento, multiplicando o resultado por 100 para converter para porcentagem.
 
-valor_total_metodos_pagamento_percent = (valor_total_metodos_pagamento / valor_total_metodos_pagamento.sum()) * 100
+    valor_total_metodos_pagamento_percent = (valor_total_metodos_pagamento / valor_total_metodos_pagamento.sum()) * 100
 
 
 # Caso queira consultar nessa coluna, duas outras colunas. Por exemplo, tenho uma Regiao e nessa regiao quero consultar as categorias que mais vendeu. Aqui estamos selecionando apenas as linhas do DataFrame original df que correspondem à região da Europa.
 
-df_europe = df[df['Region'] == 'Asia']
+    df_europe = df[df['Region'] == 'Asia']
 
 # E em seguida voce agrupa as colunas que voce quer consultar
 
-europe_category = df_europe.groupby('Product Category')['Total Revenue'].sum().reset_index()
+    europe_category = df_europe.groupby('Product Category')['Total Revenue'].sum().reset_index()
 
 # Se quiser consultar quanto um produto, regiao, categoria vendeu em um determinado periodo
 
-df_american = df[df['Region'] == 'North America']
-america_category_month = df_american.groupby(df['Date'].dt.to_period('W'))['Total Revenue'].sum().reset_index()
-american_asc = america_category_month.sort_values(by= 'Total Revenue', ascending = False).reset_index(drop=True)
-american_asc
+    df_american = df[df['Region'] == 'North America']
+    america_category_month = df_american.groupby(df['Date'].dt.to_period('W'))['Total Revenue'].sum().reset_index()
+    american_asc = america_category_month.sort_values(by= 'Total Revenue', ascending = False).reset_index(drop=True)
+    american_asc
