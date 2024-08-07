@@ -29,4 +29,6 @@
 - Quais padrões de comportamento podem ser observados com base nos dados de vendas?
 - Há produtos que frequentemente são comprados juntos (análise de cesta de compras)?
 
+## 8. Popularidade de diferentes regiões:
+- Explore a popularidade de diferentes categorias de produtos em todas as regiões.
 

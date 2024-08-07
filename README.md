@@ -171,4 +171,17 @@ picos_vendas = vendas_diarias[vendas_diarias > (media_diaria + 2 * desvio_padrao
 valor_total_metodos_pagamento_percent = (valor_total_metodos_pagamento / valor_total_metodos_pagamento.sum()) * 100
 
 
+# Caso queira consultar nessa coluna, duas outras colunas. Por exemplo, tenho uma Regiao e nessa regiao quero consultar as categorias que mais vendeu. Aqui estamos selecionando apenas as linhas do DataFrame original df que correspondem à região da Europa.
 
+df_europe = df[df['Region'] == 'Asia']
+
+# E em seguida voce agrupa as colunas que voce quer consultar
+
+europe_category = df_europe.groupby('Product Category')['Total Revenue'].sum().reset_index()
+
+# Se quiser consultar quanto um produto, regiao, categoria vendeu em um determinado periodo
+
+df_american = df[df['Region'] == 'North America']
+america_category_month = df_american.groupby(df['Date'].dt.to_period('W'))['Total Revenue'].sum().reset_index()
+american_asc = america_category_month.sort_values(by= 'Total Revenue', ascending = False).reset_index(drop=True)
+american_asc
